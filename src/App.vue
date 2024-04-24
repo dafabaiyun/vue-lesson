@@ -1,26 +1,46 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="app">
+    <Editor v-model="state" :formData="formData"></Editor>
+
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import {ref,provide} from 'vue';
+import data from '@/data.json'
+import Editor from '@/packages/editor'
+import {registerConfig as config} from '@/utils/editor-config'
+import Range from './components/Range'
+export default{
+  components:{
+    Editor,
+    Range
+  },
+  setup(){
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
+    const state=ref(data)
+    provide('config',config)  
+
+    const formData=ref({
+      username:'zfjg',
+      password:123,
+      start:0,
+      end:100
+    })
+    return{
+      state,
+      formData
+    }
   }
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.app{
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
 }
 </style>
